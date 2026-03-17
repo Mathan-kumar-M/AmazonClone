@@ -1,0 +1,145 @@
+body{
+    background: #ffffff; }
+.cart{
+    display: flex;      
+    gap: 8px;
+    margin: 20px;
+}
+
+ .cart-left {
+    background: white;
+    padding: 20px;
+ }
+
+.cart-left h1 {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+.cart-left hr {
+    border: none;
+    height: 1px;
+    background-color: rgb(53, 48, 40);
+}
+.product-cart-list{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 24px 0 12px 12px;
+}
+.product-cart-titleprice {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+}
+.product-cart-bestseller {
+    font-size: 13px;
+    color: rgb(53, 48, 40);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.product-cart-bestseller  span {
+    font-size: 13px;
+    background-color: orangered;
+    padding: 5px;
+    border-radius: 10px;
+    color: aliceblue;
+}
+.cart-stock {
+    font-size: 13px;
+    color: #99ff00;
+    margin: 4px 0;
+}
+.cart-delivery{
+     font-size: 13px;
+}
+.cart-delivery span { color: green; font-weight: 500; font-size: 14px;}
+
+.cart-returns {
+    font-size: 15px;
+    color: #003c64;
+}
+.gift {
+    font-size: 13px;
+    color: rgb(53, 48, 40);
+}
+.gift span {
+    color: #003c64;
+    font-weight: 500;
+    font-size: 15px;
+}
+.cart-specs {
+    display: grid;
+    row-gap: 3px;
+    font-size: 13px;
+    margin: 7px 0;   
+}
+.cart-specs  span {
+    color: #5b5f62;
+    font-weight: 500;
+    margin-left: 14px;
+}
+.action{
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    align-items: center;
+}
+.action-btn {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: rgb(91, 192, 225);
+}
+.action hr {
+    border: none;
+    height: 20px;
+    width: 2px;
+    background: #8cc6d4;
+}
+.action-btn select {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(91, 192, 225, 0.2);
+
+}
+
+.cart-list-subtotal {
+    background: white;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: right;
+
+}
+.cart-right {
+    background-color: #f0f2f2;
+    padding: 20px;
+    border-radius: 25px;
+    height: fit-content;
+    min-width: 280px;
+}
+.cart-free-delivery {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.subtotal{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.proceed-btn {
+    padding: 10px 20px;
+    background: orange;
+    color: #f0f2f2;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+.proceed-btn:hover{
+    color: black;
+    transform: translateY(-3px);
+}

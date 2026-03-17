@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sports, Fitness & Outdoors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amazon+Ember:wght@400;700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  
+<script>
+
+const token = localStorage.getItem("token");
+
+fetch("/api/cart", {
+    method: "GET",
+    headers: {
+        "Authorization": "Bearer " + token
+    }
+})
+.then(response => {
+    if (response.status === 401 || response.status === 403) {
+        window.location.href = "/SignIn.html";
+        return;
+    }
+    return response.json();
+})
+
+    .catch(error => {
+    console.error(error);
+});
+
+</script>
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg: #232f3e;
+      --nav-hover: #f90;
+      --orange: #f90;
+      --dark-orange: #e47911;
+      --body-bg: #eaeded;
+      --white: #fff;
+      --text-dark: #0f1111;
+      --text-mid: #565959;
+      --border: #ddd;
+      --sidebar-width: 260px;
+      --font: 'Noto Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--body-bg);
+      color: var(--text-dark);
+      font-size: 14px;
+    }
+
+    /* Nav Bar */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #00182c;
+    padding: 10px 20px;
+    color: white;
+}
+
+.nav-country {
+    display: flex;
+    align-items: end;
+    margin-left: 15px;
+    font-size: 13px;
+    color: #d2d2d2;
+    padding: 0 5px;
+}
+
+.nav-country h1 {
+    color: white;
+}
+
+.nav-country:hover{ border-color: #fff; }
+
+.nav-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: white;
+    color: grey;
+    max-width: 70%;
+    border-radius: 3px;
+    margin-left: 15px;
+}
+
+.nav-search-categories {
+    display: flex;
+    align-items: center;
+    padding: 11px 20px;
+    border-radius: 3px;
+    background: rgb(184, 173, 173);
+}
+
+.nav-search input {
+    border: none;
+    outline: none;
+    padding: 9px;
+    width: 100%;
+}
+
+.nav-search-icon {
+    max-width: 40px;
+    padding: 12px;
+    background: rgb(255, 244, 42);
+    border-radius: 3px;
+}
+
+.nav-languages {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-weight: 600 ;
+    margin-left: 15px;
+}
+
+.nav-texts {
+    margin-left: 15px;
+
+}
+
+.nav-texts p {
+    font-size: 8px;
+}
+
+.nav-texts h1 {
+   font-size: 14px;
+}
+
+.nav-cart {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.nav-bottom {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 20px;
+    background-color: #03223b;
+    color:#ffffff; 
+}
+
+.nav-bottom div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.nav-bottom p{padding: 4px 8px;}
+.nav-bottom p:hover {border: 1px solid #fff;}
+
+
+
+    /* ── TOP SECOND NAV BAR ── */
+    .top-nav {
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: border-color .15s;
+    }
+    .top-nav a:first-child { font-weight: 700; font-size: 14px; }
+    .top-nav a:hover { border-color: #fff; }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrapper {
+      display: flex;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 10px 8px;
+      gap: 10px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      flex-shrink: 0;
+      background: var(--white);
+      padding: 14px 16px;
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+    .sidebar h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+    .sidebar ul { list-style: none; }
+    .sidebar ul li { margin: 3px 0; }
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #0066c0;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .sidebar ul li a:hover { text-decoration: underline; color: #c7511f; }
+    .sidebar > ul > li > a {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+    .sidebar > ul > li > a:hover { color: #c7511f; text-decoration: underline; }
+
+    /* ── MAIN CONTENT ── */
+    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── CATEGORY TILES ── */
+    .category-tiles {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .tile:hover .tile-label { text-decoration: underline; color: #c7511f; }
+    .tile-img {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      background: #f0f2f2;
+      object-fit: cover;
+      display: block;
+      /* placeholder gradient until user drops in real images */
+      background: linear-gradient(135deg, #e0e0e0 0%, #c8c8c8 100%);
+    }
+    /* Each tile gets a distinct placeholder color */
+    .tile:nth-child(1) .tile-img { background: linear-gradient(135deg, #d0e8f0, #a8c8d8); }
+    .tile:nth-child(2) .tile-img { background: linear-gradient(135deg, #f0ddd0, #d8b8a8); }
+    .tile:nth-child(3) .tile-img { background: linear-gradient(135deg, #d8e8d0, #b8c8b0); }
+    .tile:nth-child(4) .tile-img { background: linear-gradient(135deg, #e8ddd0, #c8b8a0); }
+    .tile:nth-child(5) .tile-img { background: linear-gradient(135deg, #f0d8d8, #d8b0b0); }
+    .tile:nth-child(6) .tile-img { background: linear-gradient(135deg, #d8f0d8, #a8c8a8); }
+    .tile:nth-child(7) .tile-img { background: linear-gradient(135deg, #e8d8f0, #c0a8d0); }
+    .tile-label {
+      font-size: 12.5px;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    /* ── BANNER SECTION ── */
+    .banner-section {
+      background: var(--white);
+      border-radius: 4px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: center;
+    }
+    .banner-image-area {
+      
+      border-radius: 6px 0 0 6px;
+      min-height: 220px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .banner-image-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Placeholder treadmill silhouette using CSS */
+    .banner-placeholder {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(170deg, #f5c518 60%, #e6b800 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.15);
+      font-size: 80px;
+    }
+    .banner-text {
+      background: var(--white);
+      border-radius: 0 6px 6px 0;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .brand-badge {
+      background: #cc0c39;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+      letter-spacing: .5px;
+    }
+    .banner-text h2 {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1;
+    }
+    .banner-text h2 span { color: var(--dark-orange); }
+    .banner-text p {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .banner-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .dot.active { background: #555; }
+
+    /* ── BANK OFFERS STRIP ── */
+    .bank-offers {
+      background: var(--white);
+      border-radius: 4px;
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .bank-offer {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+    }
+    .bank-offer:last-child { border-right: none; }
+    .bank-logo {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -.5px;
+      white-space: nowrap;
+      min-width: 68px;
+    }
+    .bank-logo.hdfc { background: #004c8f; }
+    .bank-logo.axis { background: #800000; }
+    .bank-logo.hsbc { background: #db0011; }
+    .bank-logo.kotak { background: #e3261a; }
+    .bank-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border);
+    }
+    .bank-offer-text { font-size: 12px; line-height: 1.4; }
+    .bank-offer-text strong { font-size: 13px; font-weight: 700; display: block; }
+    .bank-offer-text span { color: var(--text-mid); font-size: 11px; }
+
+    /* ── DOTS carousel indicator (banner) ── */
+    .dots-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 1024px) {
+      .tiles-grid { grid-template-columns: repeat(4, 1fr); }
+      .sidebar { display: none; }
+    }
+    @media (max-width: 700px) {
+      .banner-section { grid-template-columns: 1fr; }
+      .tiles-grid { grid-template-columns: repeat(3, 1fr); }
+      .bank-offers { flex-wrap: wrap; }
+    }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Arial', sans-serif; background: #f3f3f3; color: #0f1111; font-size: 14px; }
+
+    .page { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+    .results-header {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #0f1111;
+    }
+    .results-header span { color: #c7511f; font-weight: 700; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+    /* IMAGE AREA */
+    .img-box {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #f8f8f8;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    /* Placeholder shown when no image is set */
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #999;
+      background: #f0f2f2;
+    }
+
+    .badge-bestseller {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #cc0c39;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .badge-sponsored {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 11px;
+      color: #565959;
+    }
+    .trend-arrow {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: #cc0c39;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* CARD BODY */
+    .card-body { padding: 12px 14px 16px; }
+
+    .product-title {
+      font-size: 13.5px;
+      color: #0f1111;
+      line-height: 1.45;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      /* -webkit-line-clamp: 3; */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-title:hover { color: #c7511f; text-decoration: underline; }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .rating-num { font-size: 12.5px; color: #c7511f; font-weight: 600; }
+    .stars { color: #c7511f; font-size: 13px; letter-spacing: -0.5px; }
+    .review-count { font-size: 12.5px; color: #007185; }
+    .review-count:hover { color: #c7511f; text-decoration: underline; cursor: pointer; }
+
+    .bought-label {
+      font-size: 12px;
+      color: #0f1111;
+      margin-bottom: 8px;
+    }
+
+    .price-block { margin-bottom: 4px; }
+    .price-main {
+      font-size: 22px;
+      color: #0f1111;
+      font-weight: 400;
+    }
+    .price-main sup { font-size: 13px; vertical-align: super; }
+    .price-meta {
+      font-size: 12.5px;
+      color: #565959;
+      margin-top: 1px;
+    }
+    .price-meta s { color: #565959; }
+    .price-off { color: #cc0c39; }
+
+    .savings-tag {
+      display: inline-block;
+      background: #f0fbe8;
+      color: #2d6a0a;
+      border: 1px solid #c5e8a0;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+    }
+
+    .delivery-info {
+      font-size: 12.5px;
+      color: #0f1111;
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+    .delivery-info strong { color: #0f1111; font-weight: 700; }
+    .prime-link { color: #007185; font-weight: 600; cursor: pointer; }
+    .prime-link:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    footer{
+    height: 85vh;
+    background-color: #00182c;
+    color: #d2d2d2;
+}
+
+footer h6 {
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #1d415f;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-top: 5%;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-col h4 {
+    margin-bottom: 5px;
+}
+
+.footer a {
+    color: #d2d2d2;
+    font-size: 13px;
+    text-align: center;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    margin-top: 7%;
+    background-color: rgba(255, 255, 255, 0.3);  
+}
+
+.last-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    margin-top: 17px;
+}
+
+.last-footer p {
+    font-size: 13px;
+    color: #d2d2d2;
+    margin-left: 15px;
+}
+
+.footer-col p {
+    cursor: pointer;
+}
+
+.footer-col p:hover {
+    color: white;
+    font-weight: 400;
+}
+
+</style>
+</head>
+<body>
+
+  <nav>
+        <a href="/">  <img src="./assets/amazon_logo.png" width="100" alt="Logo"> </a>
+
+        <div class="nav-country">
+            <img src="assets/location_icon.png" height="20" alt="Location">
+            <div>
+                <p>Deliver to</p>
+                <h2>India</h2>
+            </div>
+        </div>
+
+        <div class="nav-search">
+            <div class="nav-search-categories">
+                <p>All</p>
+                <img src="assets/dropdown_icon.png" height="12" alt="Dropdown">
+            </div>
+                <input type="text" class="nav-search-input" placeholder="Search">
+                <img src="assets/search_icon.png" class="nav-search-icon" alt="search">
+        </div>
+
+        <div class="nav-languages">
+            <img src="assets/us_flag.png" width="25px" alt="Country">
+            <p>EN</p>
+            <img src="assets/dropdown_icon.png" width="8px" alt="dropdown">
+        </div>
+
+        <div class="nav-texts">
+            <p><a href="SignIn.html" style="color: white; text-decoration: none;">Hello, SignIn</a> </p>
+            <h1>Account & Lists <img src="assets/dropdown_icon.png" width="8px" alt="Dropdown"></h1>
+        </div>
+
+         <div class="nav-texts">
+            <p>Return </p>
+            <h1>& Orders <img src="assets/dropdown_icon.png" width="8px" alt="Dropdown"></h1>
+        </div>
+        <a href="amazon-cart.html" class="nav-cart" style="text-decoration: none; color: white;">
+            <img src="assets/cart_icon.png" width="25px" alt="Cart">
+            <h5>Cart</h5>
+        </a>
+    </nav>
+
+    <div class="nav-bottom">
+    <div>
+        <img src="assets/menu_icon.png" width="24px" alt="Menu">
+        <p>All</p>
+    </div>
+    <p>Today's Deals</p>
+    <p>Customer Service</p>
+    <p>Registry</p>
+    <p>GiftCards</p>
+    <p>sell</p>
+ </div>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="#">Sports, Fitness &amp; Outdoors</a>
+    <a href="#">Exercise &amp; Fitness</a>
+    <a href="#">Cricket</a>
+    <a href="#">Badminton</a>
+    <a href="#">Cycling</a>
+    <a href="#">Football</a>
+    <a href="#">Running</a>
+    <a href="#">Camping &amp; Hiking</a>
+    <a href="#">Swimming</a>
+    <a href="#">Volleyball</a>
+    <a href="#">Basketball</a>
+    <a href="#">Table Tennis</a>
+    <a href="#">Sportswear</a>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h3>Category</h3>
+      <ul>
+        <li><a href="#">Sports, Fitness &amp; Outdoors</a></li>
+        <ul style="padding-left:12px; margin-top:6px;">
+          <li><a href="#">American Football</a></li>
+          <li><a href="#">Badminton</a></li>
+          <li><a href="#">Baseball</a></li>
+          <li><a href="#">Basketball</a></li>
+          <li><a href="#">Billiards</a></li>
+          <li><a href="#">Boxing</a></li>
+          <li><a href="#">Cricket</a></li>
+          <li><a href="#">Cycling</a></li>
+          <li><a href="#">Dance</a></li>
+          <li><a href="#">Equestrian Sports</a></li>
+          <li><a href="#">Exercise &amp; Fitness</a></li>
+          <li><a href="#">Field Hockey</a></li>
+          <li><a href="#">Fishing</a></li>
+          <li><a href="#">Football</a></li>
+          <li><a href="#">Footwear</a></li>
+          <li><a href="#">Golf</a></li>
+          <li><a href="#">Gymnastics</a></li>
+          <li><a href="#">Hunting</a></li>
+          <li><a href="#">Lacrosse</a></li>
+          <li><a href="#">Martial Arts</a></li>
+          <li><a href="#">Netball</a></li>
+          <li><a href="#">Outdoor Recreation</a></li>
+          <li><a href="#">Rugby</a></li>
+        </ul>
+      </ul>
+      <img src="assets/jersey.png" style="margin-top: 20px; border-radius: 20px;" alt="Jersey">
+      <h6 style="font-size: 15px; font-weight:900; color: #800000; text-align: center;">Get G.O.A.T Jersey</h6>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+      <!-- CATEGORY TILES -->
+      <section class="category-tiles">
+        <div class="tiles-grid">
+          <div class="tile">
+            <!-- Replace src with your image -->
+            <img class="tile-img" src="assets/Cycling.png" alt="Cycling"/>
+            <span class="tile-label">Cycling</span>
+          </div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-weight.png" alt="Strength training"/>
+  <span class="tile-label">Strength training</span>
+</div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-cardio.png" alt="Cardio"/>
+  <span class="tile-label">Cardio</span>
+</div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-camp.png" alt="Camping & outdoors"/>
+  <span class="tile-label">Camping &amp; outdoors</span>
+</div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-dumbels.png" alt="Fitness accessories"/>
+  <span class="tile-label">Fitness accessories</span>
+</div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-cricket.png" alt="Cricket"/>
+  <span class="tile-label">Cricket</span>
+</div>
+<div class="tile">
+  <img class="tile-img" src="assets/Amazon-ronaldo.png" alt="Football"/>
+  <span class="tile-label">Football</span>
+</div>
+        </div>
+      </section>
+
+      <!-- BANNER -->
+      <section class="banner-section">
+        <!-- Left: image placeholder (drop your treadmill image here) -->
+        <div class="banner-image-area">
+         <img src="assets/rock.jpg" alt="Treadmill"/>
+          
+        </div>
+
+        <!-- Right: text -->
+        <div class="banner-text">
+          <span class="brand-badge">SPARNOD FITNESS EQUIPMENT</span>
+          <h2>Up to <span>75% off</span></h2>
+          <p>Brand Days | 14th &amp; 15th March</p>
+        </div>
+      </section>
+
+      <!-- BANK OFFERS -->
+      <section class="bank-offers">
+        <div class="bank-offer">
+          <div class="bank-logo hdfc">HDFC<br>BANK</div>
+          <div class="bank-divider"></div>
+          <div class="bank-offer-text">
+            <strong>Up to ₹4,500 Instant Discount*</strong>
+            <span>On Credit Card and EMI Transactions</span><br>
+            <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+          </div>
+        </div>
+        <div class="bank-offer">
+          <div class="bank-logo axis">AXIS<br>BANK</div>
+          <div class="bank-divider"></div>
+          <div class="bank-offer-text">
+            <strong>7.5% Instant Discount*</strong>
+            <span>On Credit Card and EMI Transactions</span><br>
+            <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+          </div>
+        </div>
+        <div class="bank-offer">
+          <div class="bank-logo hsbc">HSBC</div>
+          <div class="bank-divider"></div>
+          <div class="bank-offer-text">
+            <strong>7.5% Instant Discount*</strong>
+            <span>On Credit Card and EMI Transactions</span><br>
+            <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+          </div>
+        </div>
+        <div class="bank-offer">
+          <div class="bank-logo kotak">kotak</div>
+          <div class="bank-divider"></div>
+          <div class="bank-offer-text">
+            <strong>7% Instant Discount*</strong>
+            <span>On Credit Card and EMI Transactions</span><br>
+            <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="images">
+
+        <img src="assets/ronaldo-amazon.png" style="width: 100%;" alt="Ronaldo">
+
+      </section>
+
+    </main>
+  </div>
+
+  <div class="page">
+
+  <div class="results-header">
+    1–6 of over 40,000 results for <span>Football</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- CARD 1 — Alnasser FC -->
+    <div class="card">
+      <div class="img-box">
+        <!--
+          DROP YOUR IMAGE HERE:
+          <img src="assets/kitbag.png" alt="WHACKK Kitbag"/>
+          Remove the placeholder div below once you add the image.
+        -->
+        <img src="assets/Alnasser.png" alt="WHACKK Kitbag"/>
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Alnasser Fc Jersey with GOAT Name(Black & Yellow), Quality clothing
+          and Flexible
+        </p>
+        <div class="rating-row">
+          <span class="rating-num">4.5</span>
+          <span class="stars">★★★★½</span>
+          <span class="review-count">(98)</span>
+        </div>
+        <p class="bought-label">100+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>998</div>
+          <div class="price-meta">M.R.P: <s>₹2,199</s> <span class="price-off">(55% off)</span></div>
+        </div>
+        <div class="delivery-info">
+          FREE delivery <strong>Wed, 18 Mar</strong><br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 — Shin Pads -->
+    <div class="card">
+      <div class="img-box">
+        <!--
+          DROP YOUR IMAGE HERE:
+          <img src="assets/shinpads.png" alt="Proberos Shin Pads"/>
+        -->
+        <img src="assets/pad.png" alt="Proberos Shin Pads"/>
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Proberos® Mini Football Shin Pads for Kid, Master Edition Shinguards Games Matches, Training, Basketball, Baseball, Cycling, Light Weight &amp; Breathable Guard (S)</p>
+        <div class="rating-row">
+          <span class="rating-num">4.2</span>
+          <span class="stars">★★★★</span>
+          <span class="review-count">(120)</span>
+        </div>
+        <p class="bought-label">100+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>349</div>
+          <div class="price-meta">M.R.P: <s>₹599</s> <span class="price-off">(42% off)</span></div>
+        </div>
+        <div class="delivery-info">
+          FREE delivery <strong>Wed, 18 Mar</strong> on first order<br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 — Nivia Football -->
+    <div class="card">
+      <div class="img-box">
+        <!--
+          DROP YOUR IMAGE HERE:
+          <img src="assets/nivia-ball.png" alt="Nivia Storm Football"/>
+        -->
+        <img src="assets/Fotball.png" alt="Nivia Storm Football"/>
+        <span class="badge-bestseller">Best seller</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Nivia Storm White Moulded Football with Ball Pump Football – Size: 5 (Pack of 1, White)</p>
+        <div class="rating-row">
+          <span class="rating-num">3.9</span>
+          <span class="stars">★★★★</span>
+          <span class="review-count">(53.5K)</span>
+        </div>
+        <p class="bought-label">1K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>399</div>
+          <div class="price-meta">M.R.P: <s>₹955</s> <span class="price-off">(58% off)</span></div>
+        </div>
+        <span class="savings-tag">Savings Buy 2 items, get 2% off</span>
+        <div class="delivery-info">
+          FREE delivery <strong>Mon, 16 Mar</strong> on first order<br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4 — Kitbag (repeat) -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/NB.png" alt="WHACKK Kitbag"/>
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">New Balance Cricket bat | Top quality and very light weight</p>
+        <div class="rating-row">
+          <span class="rating-num">4.5</span>
+          <span class="stars">★★★★½</span>
+          <span class="review-count">(98)</span>
+        </div>
+        <p class="bought-label">100+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>998</div>
+          <div class="price-meta">M.R.P: <s>₹2,199</s> <span class="price-off">(55% off)</span></div>
+        </div>
+        <div class="delivery-info">
+          FREE delivery <strong>Wed, 18 Mar</strong><br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5 — Shin Pads (repeat) -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/Volley.png" alt="Proberos Shin Pads"/>
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Proberos® Mini VolleyBall for Kid, Master Edition Shinguards Games Matches, Training,  &amp; Very effective</p>
+        <div class="rating-row">
+          <span class="rating-num">4.2</span>
+          <span class="stars">★★★★</span>
+          <span class="review-count">(120)</span>
+        </div>
+        <p class="bought-label">100+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>349</div>
+          <div class="price-meta">M.R.P: <s>₹599</s> <span class="price-off">(42% off)</span></div>
+        </div>
+        <div class="delivery-info">
+          FREE delivery <strong>Wed, 18 Mar</strong> on first order<br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6 — Nivia Football (repeat) -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/Basket.png" alt="Nivia Storm Football"/>
+        <span class="badge-bestseller">Best seller</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Branded Basket ball with Orange color – Size: 5 (Pack of 1, Orange with black)</p>
+        <div class="rating-row">
+          <span class="rating-num">3.9</span>
+          <span class="stars">★★★★</span>
+          <span class="review-count">(53.5K)</span>
+        </div>
+        <p class="bought-label">1K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>399</div>
+          <div class="price-meta">M.R.P: <s>₹955</s> <span class="price-off">(58% off)</span></div>
+        </div>
+        <span class="savings-tag">Savings Buy 2 items, get 2% off</span>
+        <div class="delivery-info">
+          FREE delivery <strong>Mon, 16 Mar</strong> on first order<br>
+          Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+    <a href="\" style="text-decoration: none; color: white;"><h6>Back To Top</h6></a>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h4>Get to Know Us</h4>
+            <p>Careers</p>
+            <p>Blog</p>
+            <p>About Amazon</p>
+            <p>Investor Relations</p>
+            <p>Amazon Devices</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Connect with Us</h4>
+            <p>Facebook</p>
+            <p>Twitter</p>  
+            <p>Instagram</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Make Money with Us</h4>
+            <p>Sell on Amazon</p>
+            <p>Sell under Amazon Accelerator</p>
+            <p>Amazon Global Selling</p>
+            <p>Become an Affiliate</p>
+            <p>Fulfilment by Amazon</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Let Us Help You</h4>
+            <p>Your Account</p>
+            <p>Returns Centre</p>
+            <p>100% Purchase Protection</p>
+            <p>Amazon App Download</p>
+            <p>Amazon Assistant Download</p>
+        </div>
+    </div>
+     <div class="line">  </div>
+     <div class="last-footer">
+    <img src="./assets/amazon_logo.png" width="100" alt="logo">
+    <p>&copy; 1996-2026, Amazon.com, Inc. or its affiliates</p>
+    </div>
+  </footer>
+
+ 
+</body>
+</html>

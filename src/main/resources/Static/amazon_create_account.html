@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon.in - Create Account</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Amazon Ember", Arial, sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 10px;
+      border-bottom: 1px solid #ffffff;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      text-decoration: none;
+    }
+
+    .logo-text {
+      font-size: 34px;
+      font-weight: 900;
+      color: #0f1111;
+      font-family: Georgia, serif;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .logo-dot-in {
+      font-size: 13px;
+      font-weight: bold;
+      color: #0f1111;
+      margin-bottom: 6px;
+      margin-left: 1px;
+    }
+
+    .arrow {
+      display: block;
+      width: 56px;
+      height: 10px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 10'%3E%3Cpath d='M2 5 Q28 12 54 5' stroke='%23f90' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpolygon points='50,2 56,5 50,8' fill='%23f90'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+      margin-top: 2px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 24px 32px 28px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card h1 {
+      font-size: 28px;
+      font-weight: 400;
+      color: #0f1111;
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .phone-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 15px;
+      color: #0f1111;
+    }
+
+    .phone-row a {
+      color: #0066c0;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .phone-row a:hover { text-decoration: underline; color: #c7511f; }
+
+    .subtitle {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .btn-proceed {
+      display: block;
+      width: 100%;
+      background: #ffe600;
+      border: 1px solid #a88734;
+      border-radius: 25px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+    }
+
+    .btn-proceed:hover {
+      background-color: #f7ca00;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e7e7e7;
+      margin: 20px 0 16px;
+    }
+
+    .already {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f1111;
+      margin-bottom: 8px;
+    }
+
+    .signin-link {
+      color: #0066c0;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .signin-link:hover { text-decoration: underline; color: #c7511f; }
+
+    footer {
+      background: #fff;
+      border-top: 1px solid #ddd;
+      padding: 30px 0 30px;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 8px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #0066c0;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { text-decoration: underline; }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="#">
+      <div>
+       <a href="/"><img  class="logo" src="./assets/amazon_logo_dark.png" alt="Amazon Logo" width="100px"></a>
+      </div>
+    </a>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Looks like you are new to Amazon</h1>
+      <div class="phone-row">
+        <span>IN +91 The Given number</span>
+        <a href="SignIn.html">Change</a>
+      </div>
+      <p class="subtitle">Let's create an account using your mobile number</p>
+      <button class="btn-proceed" onclick="window.location.href='Create.html'">Proceed to create an account</button>
+      <hr class="divider">
+      <p class="already">Already a customer?</p>
+      <a class="signin-link" href="SignIn.html">Sign in with another email or mobile</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Conditions of Use</a>
+      <a href="#">Privacy Notice</a>
+      <a href="#">Help</a>
+    </div>
+    <p class="footer-copy">© 1996–2026, Amazon.com, Inc. or its affiliates</p>
+  </footer>
+
+</body>
+</html>

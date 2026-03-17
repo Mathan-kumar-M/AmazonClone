@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #fff;
+      color: #111;
+      font-size: 13px;
+    }
+
+    /* ---- Logo ---- */
+    .logo-container {
+      text-align: center;
+      padding: 14px 0 10px;
+    }
+
+    .logo-container a {
+      text-decoration: none;
+      color: #111;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: -1px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo-text .suffix {
+      font-size: 14px;
+      font-weight: 400;
+      font-style: normal;
+      vertical-align: top;
+      margin-left: 1px;
+    }
+
+    .logo-text .arrow {
+      display: block;
+      width: 38px;
+      height: 4px;
+      margin: -2px auto 0;
+      background: transparent;
+      position: relative;
+    }
+
+    .logo-text .arrow::after {
+      content: '';
+      display: block;
+      width: 38px;
+      height: 0;
+      border-bottom: 3px solid #f90;
+      border-radius: 0 0 50% 50% / 0 0 8px 8px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ---- Form Card ---- */
+    .form-card {
+      width: 350px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px 26px;
+    }
+
+    .form-card h1 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    /* ---- Labels ---- */
+    .form-card label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* ---- Mobile Number Row ---- */
+    .mobile-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .country-select {
+      display: flex;
+      align-items: center;
+      border: 1px solid #888;
+      border-radius: 4px;
+      padding: 6px 8px;
+      background: #f0f2f2;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      height: 31px;
+    }
+
+    .country-select select {
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      padding-right: 2px;
+    }
+
+    .country-select .caret {
+      font-size: 10px;
+      margin-left: 2px;
+      color: #555;
+    }
+
+    .mobile-row input[type="text"] {
+      flex: 1;
+      height: 31px;
+      border: 1px solid #888;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .mobile-row input[type="text"]:focus {
+      border-color: #e77600;
+      box-shadow: 0 0 3px 2px rgba(228, 160, 39, 0.4);
+    }
+
+    /* ---- Text Inputs ---- */
+    .form-card input[type="text"],
+    .form-card input[type="password"],
+    .form-card input[type="email"] {
+      width: 100%;
+      height: 31px;
+      border: 1px solid #888;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 13px;
+      outline: none;
+      margin-bottom: 14px;
+    }
+
+    .form-card input[type="text"]:focus,
+    .form-card input[type="password"]:focus,
+     .form-card input[type="email"]:focus {
+      border-color: #e77600;
+      box-shadow: 0 0 3px 2px rgba(228, 160, 39, 0.4);
+    }
+
+    .form-card input::placeholder {
+      color: #999;
+    }
+
+    /* ---- Password Hint ---- */
+    .password-hint {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: -8px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #111;
+    }
+
+    .password-hint .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border-radius: 50%;
+      background: #007eb9;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    /* ---- Verify Text ---- */
+    .verify-text {
+      font-size: 12px;
+      color: #111;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    /* ---- Submit Button ---- */
+    .btn-verify {
+      width: 100%;
+      height: 32px;
+      background: #f0c14b;
+      background: linear-gradient(to bottom, #ffb301, #ffb700);
+      border: 1px solid #a88734;
+      border-radius: 3px;
+      font-size: 13px;
+      color: #111;
+      cursor: pointer;
+      margin-bottom: 18px;
+    }
+
+    .btn-verify:hover {
+      background: linear-gradient(to bottom, #de8d0a, #eeb933);
+    }
+
+    .btn-verify:active {
+      background: #f0c14b;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    /* ---- Divider ---- */
+    .divider {
+      border: none;
+      border-top: 1px solid #e7e7e7;
+      margin: 4px 0 16px;
+    }
+
+    /* ---- Sign In ---- */
+    .already-customer {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .already-customer + a {
+      font-size: 13px;
+      color: #0066c0;
+      text-decoration: none;
+    }
+
+    .already-customer + a:hover {
+      text-decoration: underline;
+      color: #c45500;
+    }
+
+    /* ---- Footer Text ---- */
+    .footer-text {
+      font-size: 12px;
+      color: #111;
+      margin-top: 18px;
+      line-height: 1.4;
+    }
+
+    .footer-text a {
+      color: #0066c0;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+      color: #c45500;
+    }
+
+    /* ---- Name field label spacing ---- */
+    .field-group {
+      margin-bottom: 0;
+    }
+
+    .field-group label {
+      margin-top: 2px;
+    }
+
+    /* ---- Divider ---- */
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: #e7e7e7;
+  margin-top: 50px;
+}
+
+/* ---- Footer ---- */
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 16px 20px;
+  gap: 10px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-link {
+  color: #0066c0;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.footer-link:hover {
+  color: #c45500;
+  text-decoration: underline;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #555555;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="logo-container">
+    <a href="#">
+      <span class="logo-text">
+         <a href="/"><img  class="logo" src="./assets/amazon_logo_dark.png" alt="Amazon Logo" width="100px"></a>
+      </span>
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="form-card">
+    <h1 style="font-weight: 700;">Create Account</h1>
+
+    <!-- Mobile Number -->
+    <label for="mobile">Mobile number</label>
+    <div class="mobile-row">
+      <div class="country-select">
+        <span>IN +91</span>
+        <span class="caret">&#9660;</span>
+      </div>
+      <input type="text" id="mobile" placeholder="Enter mobile number">
+    </div>
+
+    <!-- Your Email -->
+    <div class="field-group">
+      <label for="email">Your Email-id</label>
+      <input type="email" id="email" placeholder="example@email.com">
+    </div>
+
+    <!-- Your Name -->
+    <div class="field-group">
+      <label for="name">Your name</label>
+      <input type="text" id="name" placeholder="First and last name">
+    </div>
+
+    <!-- Password -->
+    <div class="field-group">
+      <label for="password">Password (at least 6 characters)</label>
+      <input type="password" id="password">
+    </div>
+
+    <!-- Password Hint -->
+    <div class="password-hint">
+      <span class="info-icon">i</span>
+      <span>Passwords must be at least 6 characters.</span>
+    </div>
+
+    <!-- Verification Info -->
+    <p class="verify-text">
+      To verify your number, we will send you a text message with a temporary code. Message and data rates may apply.
+    </p>
+
+    <!-- Submit -->
+   <button class="btn-verify" type="button" onclick="register()">Submit</button>
+
+    <!-- Divider -->
+    <hr class="divider">
+
+    <!-- Already a customer -->
+    <p class="already-customer">Already a customer?</p>
+    <a href="SignIn.html">Sign in instead</a>
+
+    <!-- Footer -->
+    <p class="footer-text">
+      By creating an account or logging in, you agree to Amazon's
+      <a href="#">Conditions of Use</a> and <a href="#">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <!-- Divider -->
+  <div class="line"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <nav class="footer-nav">
+      <a href="#" class="footer-link">Conditions of Use</a>
+      <a href="#" class="footer-link">Privacy Notice</a>
+      <a href="#" class="footer-link">Help</a>
+    </nav>
+    <p class="footer-copy">&copy; 1996-2026, Amazon.com, Inc. or its affiliates</p>
+  </footer>
+
+
+  <script>
+  async function register() {
+
+    const mobile = document.getElementById("mobile").value;
+    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const password = document.getElementById("password").value;
+
+    if (!mobile || !email || !name || !password) {
+        alert("One field is required");
+        return;
+    }
+
+    const userData = {
+    email: email,
+    name: name,
+    password: password,
+    phone: mobile
+    };
+
+    const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+    });
+
+    if (response.ok) {
+        alert("Account created successfully!");
+        window.location.href = "Password.html";
+    } else {
+        alert("Something went wrong");
+    }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Account – Amazon.in</title>
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #0f1111;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      border: 1px solid #d5d9d9;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      border-color: #adb1b8;
+    }
+
+    .icon {
+      font-size: 48px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .card-text h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #0f1111;
+    }
+
+    .card-text p {
+      font-size: 13px;
+      color: #565959;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <h1>Your Account</h1>
+
+  <div class="grid">
+
+    <a href="#" class="card">
+      <div class="icon">📦</div>
+      <div class="card-text">
+        <h2>Your Orders</h2>
+        <p>Track, return, or buy things again</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">🔒</div>
+      <div class="card-text">
+        <h2>Login &amp; security</h2>
+        <p>Edit login, name, and mobile number</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">⭐</div>
+      <div class="card-text">
+        <h2>Prime</h2>
+        <p>View benefits and payment settings</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">📍</div>
+      <div class="card-text">
+        <h2>Your Addresses</h2>
+        <p>Edit addresses for orders and gifts</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">🏢</div>
+      <div class="card-text">
+        <h2>Your business account</h2>
+        <p>Sign up for free to save up to 18% with GST invoice and bulk discounts and purchase on credit.</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">💳</div>
+      <div class="card-text">
+        <h2>Payment options</h2>
+        <p>Edit or add payment methods</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">💰</div>
+      <div class="card-text">
+        <h2>Amazon Pay balance</h2>
+        <p>Add money to your balance</p>
+      </div>
+    </a>
+
+    <a href="#" class="card">
+      <div class="icon">🎧</div>
+      <div class="card-text">
+        <h2>Contact Us</h2>
+        <p>Contact our customer service via phone or chat</p>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+</body>
+</html>

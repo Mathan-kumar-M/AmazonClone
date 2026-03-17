@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laptops</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  
+  <script>
+
+const token = localStorage.getItem("token");
+
+fetch("/api/cart", {
+    method: "GET",
+    headers: {
+        "Authorization": "Bearer " + token
+    }
+})
+.then(response => {
+    if (response.status === 401 || response.status === 403) {
+        window.location.href = "/SignIn.html";
+        return;
+    }
+    return response.json();
+})
+
+    .catch(error => {
+    console.error(error);
+});
+
+</script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --nav-bg: #232f3e; --orange: #f90; --dark-orange: #e47911;
+      --body-bg: #eaeded; --white: #fff; --text-dark: #0f1111;
+      --text-mid: #565959; --border: #ddd; --sidebar-width: 260px;
+      --font: 'Noto Sans', sans-serif;
+    }
+    body { font-family: var(--font); background: var(--body-bg); color: var(--text-dark); font-size: 14px; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; background-color: #00182c; padding: 10px 20px; color: white; }
+    .nav-country { display: flex; align-items: end; margin-left: 15px; font-size: 13px; color: #d2d2d2; padding: 0 5px; }
+    .nav-country h1 { color: white; }
+    .nav-search { flex: 1; display: flex; align-items: center; background: white; color: grey; max-width: 70%; border-radius: 3px; margin-left: 15px; }
+    .nav-search-categories { display: flex; align-items: center; padding: 11px 20px; border-radius: 3px; background: rgb(184,173,173); }
+    .nav-search input { border: none; outline: none; padding: 9px; width: 100%; }
+    .nav-search-icon { max-width: 40px; padding: 12px; background: rgb(255,244,42); border-radius: 3px; }
+    .nav-languages { display: flex; align-items: center; gap: 2px; font-weight: 600; margin-left: 15px; }
+    .nav-texts { margin-left: 15px; }
+    .nav-texts p { font-size: 8px; }
+    .nav-texts h1 { font-size: 14px; }
+    .nav-cart { display: flex; align-items: center; margin-left: 15px; }
+    .nav-bottom { display: flex; align-items: center; gap: 20px; padding: 10px 20px; background-color: #03223b; color: #ffffff; }
+    .nav-bottom div { display: flex; align-items: center; gap: 5px; font-weight: 500; }
+    .nav-bottom p { padding: 4px 8px; }
+    .nav-bottom p:hover { border: 1px solid #fff; }
+
+    .top-nav { background: var(--nav-bg); display: flex; align-items: center; gap: 10px; padding: 8px 10px; overflow-x: auto; white-space: nowrap; }
+    .top-nav a { color: #fff; text-decoration: none; font-size: 13px; padding: 6px 10px; border: 1px solid transparent; border-radius: 2px; transition: border-color .15s; }
+    .top-nav a:first-child { font-weight: 700; font-size: 14px; }
+    .top-nav a:hover { border-color: #fff; }
+
+    .page-wrapper { display: flex; max-width: 1500px; margin: 0 auto; padding: 10px 8px; gap: 10px; }
+
+    .sidebar { width: var(--sidebar-width); flex-shrink: 0; background: var(--white); padding: 14px 16px; border-radius: 4px; align-self: flex-start; }
+    .sidebar h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .sidebar ul { list-style: none; }
+    .sidebar ul li { margin: 3px 0; }
+    .sidebar ul li a { text-decoration: none; color: #0066c0; font-size: 13.5px; line-height: 1.6; }
+    .sidebar ul li a:hover { text-decoration: underline; color: #c7511f; }
+    .sidebar > ul > li > a { font-weight: 700; font-size: 14px; color: var(--text-dark); }
+
+    .main-content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
+    .category-tiles { background: var(--white); border-radius: 4px; padding: 16px; }
+    .tiles-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+    .tile { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; cursor: pointer; }
+    .tile:hover .tile-label { text-decoration: underline; color: #c7511f; }
+    .tile-img { width: 100%; aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 32px; overflow: hidden; }
+    /* FIX: tile images fit within their container */
+    .tile-img img { width: 100%; height: 100%; object-fit: contain; }
+    .tile-label { font-size: 12.5px; color: var(--text-dark); font-weight: 500; line-height: 1.3; }
+
+    .banner-section { background: var(--white); border-radius: 4px; padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center; }
+    .banner-image-area { border-radius: 6px 0 0 6px; min-height: 220px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .banner-placeholder { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; font-size: 100px; }
+    /* FIX: banner image fits container */
+    .banner-placeholder img { width: 100%; height: 100%; object-fit: contain; }
+    .banner-text { background: var(--white); border-radius: 0 6px 6px 0; padding: 28px 32px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .brand-badge { background: #cc0c39; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 2px; letter-spacing: .5px; }
+    .banner-text h2 { font-size: 36px; font-weight: 900; color: var(--text-dark); line-height: 1; }
+    .banner-text h2 span { color: var(--dark-orange); }
+    .banner-text p { font-size: 16px; font-weight: 600; color: var(--text-dark); }
+
+    .bank-offers { background: var(--white); border-radius: 4px; display: flex; align-items: stretch; overflow: hidden; }
+    .bank-offer { flex: 1; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-right: 1px solid var(--border); }
+    .bank-offer:last-child { border-right: none; }
+    .bank-logo { height: 28px; display: flex; align-items: center; justify-content: center; padding: 4px 8px; border-radius: 3px; font-size: 11px; font-weight: 900; color: #fff; letter-spacing: -.5px; white-space: nowrap; min-width: 68px; }
+    .bank-logo.hdfc { background: #004c8f; } .bank-logo.axis { background: #800000; }
+    .bank-logo.hsbc { background: #db0011; } .bank-logo.kotak { background: #e3261a; }
+    .bank-divider { width: 1px; height: 32px; background: var(--border); }
+    .bank-offer-text { font-size: 12px; line-height: 1.4; }
+    .bank-offer-text strong { font-size: 13px; font-weight: 700; display: block; }
+    .bank-offer-text span { color: var(--text-mid); font-size: 11px; }
+
+    .promo-banner { background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 100%); border-radius: 4px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .promo-banner h2 { font-size: 26px; font-weight: 900; color: #0f1111; }
+    .promo-banner h2 span { color: #c7511f; }
+    .promo-banner p { font-size: 14px; color: #565959; margin-top: 6px; }
+    .promo-banner-badge { background: #232f3e; color: #f90; font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 3px; white-space: nowrap; cursor: pointer; }
+
+    .page { max-width: 1500px; margin: 0 auto; padding: 16px; }
+    .results-header { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px; }
+    .results-header span { color: #c7511f; font-weight: 700; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+
+    /* FIX: constrain image box and make images fit properly */
+    .img-box {
+      width: 100%;
+      height: 220px;
+      background: #f8f8f8;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .badge-bestseller { position: absolute; top: 8px; left: 8px; background: #cc0c39; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 2px; }
+    .badge-sponsored { position: absolute; top: 8px; left: 8px; font-size: 11px; color: #565959; }
+    .trend-arrow { position: absolute; top: 8px; right: 10px; color: #cc0c39; font-size: 16px; font-weight: 700; }
+    .card-body { padding: 12px 14px 16px; }
+    .product-title { font-size: 13.5px; color: #0f1111; line-height: 1.45; margin-bottom: 8px; }
+    .product-title:hover { color: #c7511f; text-decoration: underline; }
+    .rating-row { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+    .rating-num { font-size: 12.5px; color: #c7511f; font-weight: 600; }
+    .stars { color: #c7511f; font-size: 13px; letter-spacing: -0.5px; }
+    .review-count { font-size: 12.5px; color: #007185; cursor: pointer; }
+    .review-count:hover { color: #c7511f; text-decoration: underline; }
+    .bought-label { font-size: 12px; color: #0f1111; margin-bottom: 8px; }
+    .price-block { margin-bottom: 4px; }
+    .price-main { font-size: 22px; color: #0f1111; font-weight: 400; }
+    .price-main sup { font-size: 13px; vertical-align: super; }
+    .price-meta { font-size: 12.5px; color: #565959; margin-top: 1px; }
+    .price-meta s { color: #565959; }
+    .price-off { color: #cc0c39; }
+    .savings-tag { display: inline-block; background: #f0fbe8; color: #2d6a0a; border: 1px solid #c5e8a0; font-size: 11.5px; font-weight: 600; padding: 3px 7px; border-radius: 3px; margin-bottom: 8px; }
+    .delivery-info { font-size: 12.5px; color: #0f1111; line-height: 1.6; margin-top: 6px; }
+    .delivery-info strong { color: #0f1111; font-weight: 700; }
+    .prime-link { color: #007185; font-weight: 600; cursor: pointer; }
+    .prime-link:hover { text-decoration: underline; }
+
+    @media (max-width: 1024px) { .tiles-grid { grid-template-columns: repeat(4,1fr); } .sidebar { display: none; } }
+    @media (max-width: 700px) { .banner-section { grid-template-columns: 1fr; } .tiles-grid { grid-template-columns: repeat(3,1fr); } .bank-offers { flex-wrap: wrap; } }
+    @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+
+    footer { min-height: 85vh; background-color: #00182c; color: #d2d2d2; }
+    footer h6 { font-size: 15px; font-weight: 400; text-align: center; padding: 10px 20px; background-color: #1d415f; }
+    .footer-container { display: flex; justify-content: space-around; align-items: flex-start; padding: 20px; margin-top: 5%; }
+    .footer-col { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col h4 { margin-bottom: 5px; }
+    .footer a { color: #d2d2d2; font-size: 13px; }
+    .line { width: 100%; height: 1px; margin-top: 7%; background-color: rgba(255,255,255,0.3); }
+    .last-footer { display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; margin-top: 17px; }
+    .last-footer p { font-size: 13px; color: #d2d2d2; margin-left: 15px; }
+    .footer-col p { cursor: pointer; }
+    .footer-col p:hover { color: white; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/"><img src="./assets/amazon_logo.png" width="100" alt="Logo"></a>
+  <div class="nav-country">
+    <img src="assets/location_icon.png" height="20" alt="Location">
+    <div><p>Deliver to</p><h2>India</h2></div>
+  </div>
+  <div class="nav-search">
+    <div class="nav-search-categories"><p>All</p><img src="assets/dropdown_icon.png" height="12" alt="Dropdown"></div>
+    <input type="text" placeholder="Search Amazon">
+    <img src="assets/search_icon.png" class="nav-search-icon" alt="search">
+  </div>
+  <div class="nav-languages">
+    <img src="assets/us_flag.png" width="25px" alt="Country">
+    <p>EN</p>
+    <img src="assets/dropdown_icon.png" width="8px" alt="dropdown">
+  </div>
+  <div class="nav-texts">
+    <p><a href="SignIn.html" style="color:white;text-decoration:none;">Hello, SignIn</a></p>
+    <h1>Account &amp; Lists <img src="assets/dropdown_icon.png" width="8px"></h1>
+  </div>
+  <div class="nav-texts"><p>Return</p><h1>&amp; Orders <img src="assets/dropdown_icon.png" width="8px"></h1></div>
+  <a href="amazon-cart.html" class="nav-cart" style="text-decoration:none;color:white;">
+    <img src="assets/cart_icon.png" width="25px" alt="Cart"><h5>Cart</h5>
+  </a>
+</nav>
+
+<div class="nav-bottom">
+  <div><img src="assets/menu_icon.png" width="24px" alt="Menu"><p>All</p></div>
+  <p>Today's Deals</p><p>Customer Service</p><p>Registry</p><p>GiftCards</p><p>Sell</p>
+</div>
+
+<nav class="top-nav">
+  <a href="#">Laptops</a>
+  <a href="#">Gaming Laptops</a>
+  <a href="#">Ultrabooks</a>
+  <a href="#">Business Laptops</a>
+  <a href="#">Chromebooks</a>
+  <a href="#">MacBooks</a>
+  <a href="#">2-in-1 Laptops</a>
+  <a href="#">Student Laptops</a>
+  <a href="#">Budget Laptops</a>
+  <a href="#">Workstations</a>
+  <a href="#">Laptop Accessories</a>
+  <a href="#">Bags &amp; Sleeves</a>
+  <a href="#">Cooling Pads</a>
+</nav>
+
+<div class="page-wrapper">
+  <aside class="sidebar">
+    <h3>Category</h3>
+    <ul>
+      <li><a href="#">Laptops</a></li>
+      <ul style="padding-left:12px;margin-top:6px;">
+        <li><a href="#">Gaming Laptops</a></li>
+        <li><a href="#">Ultrabooks</a></li>
+        <li><a href="#">Business Laptops</a></li>
+        <li><a href="#">Chromebooks</a></li>
+        <li><a href="#">Apple MacBooks</a></li>
+        <li><a href="#">2-in-1 Convertibles</a></li>
+        <li><a href="#">Student Laptops</a></li>
+        <li><a href="#">Budget Laptops</a></li>
+        <li><a href="#">Workstations</a></li>
+        <li><a href="#">Windows 11 Laptops</a></li>
+        <li><a href="#">Intel Core i5</a></li>
+        <li><a href="#">Intel Core i7</a></li>
+        <li><a href="#">Intel Core i9</a></li>
+        <li><a href="#">AMD Ryzen 5</a></li>
+        <li><a href="#">AMD Ryzen 7</a></li>
+        <li><a href="#">16GB RAM Laptops</a></li>
+        <li><a href="#">32GB RAM Laptops</a></li>
+        <li><a href="#">512GB SSD</a></li>
+        <li><a href="#">1TB SSD</a></li>
+        <li><a href="#">OLED Display</a></li>
+        <li><a href="#">4K Laptops</a></li>
+        <li><a href="#">Bags &amp; Sleeves</a></li>
+      </ul>
+    </ul>
+    <div style="margin-top:20px;background:linear-gradient(135deg,#e8eaf6,#e3f2fd);border-radius:12px;padding:16px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:8px;">💻</div>
+      <h6 style="font-size:13px;font-weight:900;color:#232f3e;">Tech Week Sale<br>Up to 40% Off</h6>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <section class="category-tiles">
+      <div class="tiles-grid">
+        <div class="tile">
+          <div class="tile-img" ><img src="assets/3-1.png" alt="Joy Stick"></div>
+          <span class="tile-label">Gaming</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img"><img src="assets/3-2.png" alt="Business Laptop"></div>
+          <span class="tile-label">Business</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img" ><img src="assets/3-3.png" alt="MacBook"></div>
+          <span class="tile-label">MacBooks</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img"><img src="assets/3-4.png" alt="Student Laptop"></div>
+          <span class="tile-label">Student</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img" ><img src="assets/3-5.png" alt="2-in-1 Laptop"></div>
+          <span class="tile-label">2-in-1</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img"><img src="assets/3-6.png" alt="Ultrabook"></div>
+          <span class="tile-label">Ultrabooks</span>
+        </div>
+        <div class="tile">
+          <div class="tile-img"><img src="assets/3-7.png" alt="Workstation"></div>
+          <span class="tile-label">Workstation</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="banner-section">
+      <div class="banner-image-area">
+        <div class="banner-placeholder"><img src="assets/Lenova.png" alt=""></div>
+      </div>
+      <div class="banner-text">
+        <span class="brand-badge">ASUS ROG & LENOVO</span>
+        <h2>Up to <span>40% off</span></h2>
+        <p>Tech Week Sale | 14th &amp; 15th March</p>
+      </div>
+    </section>
+
+    <section class="bank-offers">
+      <div class="bank-offer">
+        <div class="bank-logo hdfc">HDFC<br>BANK</div>
+        <div class="bank-divider"></div>
+        <div class="bank-offer-text">
+          <strong>Up to ₹10,000 Instant Discount*</strong>
+          <span>On Credit Card and EMI Transactions</span><br>
+          <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+        </div>
+      </div>
+      <div class="bank-offer">
+        <div class="bank-logo axis">AXIS<br>BANK</div>
+        <div class="bank-divider"></div>
+        <div class="bank-offer-text">
+          <strong>7.5% Instant Discount*</strong>
+          <span>On Credit Card and EMI Transactions</span><br>
+          <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+        </div>
+      </div>
+      <div class="bank-offer">
+        <div class="bank-logo hsbc">HSBC</div>
+        <div class="bank-divider"></div>
+        <div class="bank-offer-text">
+          <strong>7.5% Instant Discount*</strong>
+          <span>On Credit Card and EMI Transactions</span><br>
+          <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+        </div>
+      </div>
+      <div class="bank-offer">
+        <div class="bank-logo kotak">kotak</div>
+        <div class="bank-divider"></div>
+        <div class="bank-offer-text">
+          <strong>No Cost EMI on 6/12 months*</strong>
+          <span>On Credit Card and EMI Transactions</span><br>
+          <span style="font-size:10px;color:#aaa;">*T&amp;C apply</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo-banner">
+      <div>
+        <h2>Tech Week <span>Up to 40% Off</span></h2>
+        <p>Top Brands — ASUS, Lenovo, HP, Dell, Apple, Acer, MSI &amp; More</p>
+      </div>
+      <div class="promo-banner-badge">Shop Now →</div>
+    </section>
+
+  </main>
+</div>
+
+<div class="page">
+  <div class="results-header">1–6 of over 80,000 results for <span>Laptops</span></div>
+  <div class="grid">
+
+    <!-- Card 1: ASUS ROG -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-1.png" alt="Asus ROG Strix G15">
+        <span class="badge-bestseller">Best seller</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">ASUS ROG Strix G15 Gaming Laptop, AMD Ryzen 7, 16GB RAM, 512GB SSD, RTX 4060, 144Hz Display, Windows 11</p>
+        <div class="rating-row">
+          <span class="rating-num">4.5</span><span class="stars">★★★★½</span><span class="review-count">(14.2K)</span>
+        </div>
+        <p class="bought-label">2K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>89,990</div>
+          <div class="price-meta">M.R.P: <s>₹1,29,990</s> <span class="price-off">(31% off)</span></div>
+        </div>
+        <span class="savings-tag">No Cost EMI from ₹7,499/month</span>
+        <div class="delivery-info">FREE delivery <strong>Mon, 16 Mar</strong><br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong></div>
+      </div>
+    </div>
+
+    <!-- Card 2: Lenovo ThinkPad — FIXED: closing </div> moved to after spans -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-2.png" alt="Lenovo ThinkPad E14">
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Lenovo ThinkPad E14 Business Laptop, Intel Core i5 13th Gen, 16GB RAM, 512GB SSD, 14" FHD, Windows 11 Pro</p>
+        <div class="rating-row">
+          <span class="rating-num">4.4</span><span class="stars">★★★★</span><span class="review-count">(8.9K)</span>
+        </div>
+        <p class="bought-label">1K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>62,990</div>
+          <div class="price-meta">M.R.P: <s>₹85,990</s> <span class="price-off">(27% off)</span></div>
+        </div>
+        <div class="delivery-info">FREE delivery <strong>Wed, 18 Mar</strong> on first order<br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong></div>
+      </div>
+    </div>
+
+    <!-- Card 3: Apple MacBook Air -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-3.png" alt="Apple MacBook Air">
+        <span class="badge-bestseller">Best seller</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Apple MacBook Air M2 Chip, 13.6" Liquid Retina Display, 8GB RAM, 256GB SSD, macOS – Midnight</p>
+        <div class="rating-row">
+          <span class="rating-num">4.8</span><span class="stars">★★★★★</span><span class="review-count">(52.1K)</span>
+        </div>
+        <p class="bought-label">5K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>99,900</div>
+          <div class="price-meta">M.R.P: <s>₹1,14,900</s> <span class="price-off">(13% off)</span></div>
+        </div>
+        <span class="savings-tag">Savings Buy with Apple Care+, save ₹5,000</span>
+        <div class="delivery-info">FREE delivery <strong>Mon, 16 Mar</strong><br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong></div>
+      </div>
+    </div>
+
+    <!-- Card 4: HP 15s -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-4.png" alt="HP 15s">
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">HP 15s Thin &amp; Light Laptop, Intel Core i3 12th Gen, 8GB RAM, 512GB SSD, 15.6" FHD, Windows 11, Silver</p>
+        <div class="rating-row">
+          <span class="rating-num">4.3</span><span class="stars">★★★★</span><span class="review-count">(27.6K)</span>
+        </div>
+        <p class="bought-label">4K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>38,990</div>
+          <div class="price-meta">M.R.P: <s>₹55,990</s> <span class="price-off">(30% off)</span></div>
+        </div>
+        <span class="savings-tag">No Cost EMI from ₹3,249/month</span>
+        <div class="delivery-info">FREE delivery <strong>Mon, 16 Mar</strong><br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong></div>
+      </div>
+    </div>
+
+    <!-- Card 5: Dell Inspiron — FIXED: closing </div> moved to after spans -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-5.png" alt="Dell Inspiron 14 2-in-1">
+        <span class="badge-sponsored">Sponsored ⓘ</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Dell Inspiron 14 2-in-1 Laptop, Intel Core i5 12th Gen, 16GB RAM, 512GB SSD, Touch, 14" FHD, Windows 11</p>
+        <div class="rating-row">
+          <span class="rating-num">4.2</span><span class="stars">★★★★</span><span class="review-count">(5.3K)</span>
+        </div>
+        <p class="bought-label">800+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>71,490</div>
+          <div class="price-meta">M.R.P: <s>₹89,990</s> <span class="price-off">(21% off)</span></div>
+        </div>
+        <div class="delivery-info">FREE delivery <strong>Wed, 18 Mar</strong> on first order<br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Mon, 16 Mar</strong></div>
+      </div>
+    </div>
+
+    <!-- Card 6: Acer Swift Go -->
+    <div class="card">
+      <div class="img-box">
+        <img src="assets/3-2-6.png" alt="Acer Swift Go 14 Ultrabook">
+        <span class="badge-bestseller">Best seller</span>
+        <span class="trend-arrow">↗</span>
+      </div>
+      <div class="card-body">
+        <p class="product-title">Acer Swift Go 14 Ultrabook, Intel Core i7 13th Gen, 16GB LPDDR5, 512GB SSD, OLED 2.8K Display, Windows 11</p>
+        <div class="rating-row">
+          <span class="rating-num">4.5</span><span class="stars">★★★★½</span><span class="review-count">(11.4K)</span>
+        </div>
+        <p class="bought-label">1K+ bought in past month</p>
+        <div class="price-block">
+          <div class="price-main"><sup>₹</sup>79,990</div>
+          <div class="price-meta">M.R.P: <s>₹1,04,990</s> <span class="price-off">(24% off)</span></div>
+        </div>
+        <span class="savings-tag">Savings Buy 2 items, get 2% off</span>
+        <div class="delivery-info">FREE delivery <strong>Mon, 16 Mar</strong> on first order<br>Or <span class="prime-link">Prime members</span> get FREE delivery <strong>Tomorrow 6am – 10am</strong></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="\" style="text-decoration:none;color:white;"><h6>Back To Top</h6></a>
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>Get to Know Us</h4>
+      <p>Careers</p><p>Blog</p><p>About Amazon</p><p>Investor Relations</p><p>Amazon Devices</p>
+    </div>
+    <div class="footer-col">
+      <h4>Connect with Us</h4>
+      <p>Facebook</p><p>Twitter</p><p>Instagram</p>
+    </div>
+    <div class="footer-col">
+      <h4>Make Money with Us</h4>
+      <p>Sell on Amazon</p><p>Sell under Amazon Accelerator</p><p>Amazon Global Selling</p><p>Become an Affiliate</p><p>Fulfilment by Amazon</p>
+    </div>
+    <div class="footer-col">
+      <h4>Let Us Help You</h4>
+      <p>Your Account</p><p>Returns Centre</p><p>100% Purchase Protection</p><p>Amazon App Download</p><p>Amazon Assistant Download</p>
+    </div>
+  </div>
+  <div class="line"></div>
+  <div class="last-footer">
+    <img src="./assets/amazon_logo.png" width="100" alt="logo">
+    <p>&copy; 1996-2026, Amazon.com, Inc. or its affiliates</p>
+  </div>
+</footer>
+
+</body>
+</html>
