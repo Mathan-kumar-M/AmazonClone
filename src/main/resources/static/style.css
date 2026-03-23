@@ -349,6 +349,236 @@ footer h6 {
     font-weight: 400;
 }
 
+/* =============================================
+   RESPONSIVE MEDIA QUERIES — Amazon Clone
+   Add these at the bottom of your style.css
+   ============================================= */
+
+/* --- Tablet: 768px – 1024px --- */
+@media (max-width: 1024px) {
+
+  /* Nav */
+  nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+
+  .nav-country {
+    display: none; /* Hide location on tablet */
+  }
+
+  .nav-search {
+    order: 3;           /* Push search to second row */
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .nav-languages {
+    display: none;
+  }
+
+  /* Category boxes */
+  .box-row {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns instead of 4 */
+    gap: 15px;
+  }
+
+  /* Product slider */
+  .products-row {
+    gap: 10px;
+  }
+
+  .products-row img {
+    width: 150px;
+  }
+
+  /* Footer */
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+
+/* --- Mobile: up to 767px --- */
+@media (max-width: 767px) {
+
+  /* ---- Navigation ---- */
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  nav > a img {
+    width: 80px;
+  }
+
+  .nav-country,
+  .nav-languages {
+    display: none;
+  }
+
+  .nav-search {
+    order: 3;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .nav-search-categories {
+    display: none; /* Hide category dropdown on mobile */
+  }
+
+  .nav-search-input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .nav-texts {
+    font-size: 12px;
+  }
+
+  .nav-texts h1 {
+    font-size: 13px;
+  }
+
+  .nav-cart button h5 {
+    display: none; /* Show only cart icon on mobile */
+  }
+
+  /* ---- Bottom nav bar ---- */
+  .nav-bottom {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .nav-bottom p {
+    display: inline-block;
+  }
+
+  /* ---- Header Slider ---- */
+  .Header-slider {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .header-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .control-prev,
+  .control-next {
+    font-size: 20px;
+    padding: 6px;
+  }
+
+  /* ---- Category Boxes ---- */
+  .box-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .box-col {
+    padding: 10px;
+  }
+
+  .box-col h3 {
+    font-size: 14px;
+  }
+
+  .box-col img {
+    height: 160px !important;
+    object-fit: cover;
+  }
+
+  .box-col a {
+    font-size: 13px;
+  }
+
+  /* ---- Product Sliders ---- */
+  .product-slider {
+    padding: 10px 12px;
+  }
+
+  .product-slider h2 {
+    font-size: 16px;
+  }
+
+  .products-row {
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .products-row::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .products-row img {
+    width: 130px;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  /* ---- Footer ---- */
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px 15px;
+  }
+
+  .footer-col h4 {
+    font-size: 14px;
+  }
+
+  .footer-col p {
+    font-size: 12px;
+  }
+
+  .last-footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    padding: 15px;
+    font-size: 12px;
+  }
+}
+
+
+/* --- Small Mobile: up to 480px --- */
+@media (max-width: 480px) {
+
+  .box-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .box-col img {
+    height: 120px !important;
+  }
+
+  .nav-texts {
+    display: none; /* Hide Account & Orders on very small screens */
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 
 
 
